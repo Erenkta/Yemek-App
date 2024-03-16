@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumCannotFoundException;
+import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumNotFoundException;
 import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumIsNullException;
+import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumMenuNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,7 +27,8 @@ public class GlobalExceptionHandler {
         MethodArgumentNotValidException.class,
         NoSuchElementException.class,
         NullPointerException.class,
-        KurumIsNullException.class
+        KurumIsNullException.class,
+        KurumMenuNotFoundException.class
     })
     ResponseEntity<ApiError> handleExceptions(Exception exception,HttpServletRequest request){
         ApiError error = ApiError.builder()
@@ -39,11 +42,14 @@ public class GlobalExceptionHandler {
             error.setMessage("Hatali Kurum Bilgileri ! Lutfen Tekrar deneyin");
            error.setStatus(HttpStatus.BAD_REQUEST.value());
         }
-        else if(exception instanceof KurumCannotFoundException){
+        else if(exception instanceof KurumNotFoundException){
             error.setMessage(exception.getLocalizedMessage());
             error.setStatus(HttpStatus.NOT_FOUND.value());
         }else if(exception instanceof KurumIsNullException){
             error.setMessage(exception.getLocalizedMessage());
+            error.setStatus(HttpStatus.NOT_FOUND.value());
+        }else if(exception instanceof KurumMenuNotFoundException){
+            error.setMessage("Bu kuruma ait menü bulunamadı");
             error.setStatus(HttpStatus.NOT_FOUND.value());
         }
         return ResponseEntity.status(error.getStatus()).body(error);

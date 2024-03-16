@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.proje.yemekapp.Entities.Menu.MenuEntity;
 import com.proje.yemekapp.Entities.Menu.Dtos.MenuYemekDto;
+import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumMenuNotFoundException;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,10 +28,10 @@ public class KurumMenuDto {
 
 
     public static KurumMenuDto toKurumMenuDto(String kurumAdi,List<MenuEntity> menuEntities){
-       return KurumMenuDto.builder()
+       KurumMenuDto kurumMenuDto= KurumMenuDto.builder()
         .kurumAdi(kurumAdi)
-        .menu(MenuYemekDto.toMenuYemekDto(menuEntities.get(0)))
         .build();
+        return kurumMenuDto;
 
     }
     
