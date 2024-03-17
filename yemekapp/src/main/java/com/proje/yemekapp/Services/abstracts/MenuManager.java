@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import com.proje.yemekapp.Entities.Menu.MenuEntity;
 import com.proje.yemekapp.Entities.Menu.Dtos.MenuCreateDto;
 
 public interface MenuManager {
 
     //Create
-    ResponseEntity<?> createMenu(MenuCreateDto menuDto);
+    MenuCreateDto createMenu(MenuCreateDto menuDto,Long kurumId);
 
     //Read
     MenuCreateDto getById(Long menuId);

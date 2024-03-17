@@ -32,26 +32,4 @@ public class KurumCreateDto {
     @NotEmpty
     private String kurumAdres;
 
-    @JsonManagedReference
-    @Default
-    private List<MenuCreateDto> menu = new ArrayList<>();
-
-    public static KurumEntity toKurumEntity(KurumCreateDto kurumDto) {
-        return KurumEntity.builder()
-                .kurumAdi(kurumDto.getKurumAdi())
-                .kurumIl(kurumDto.getKurumIl())
-                .kurumAdres(kurumDto.getKurumAdres())
-
-                .build();
-    }
-
-    public static KurumCreateDto toKurumDto(KurumEntity kurumEntity) {
-        return KurumCreateDto.builder()
-                .kurumAdi(kurumEntity.getKurumAdi())
-                .kurumIl(kurumEntity.getKurumIl())
-                .kurumAdres(kurumEntity.getKurumAdres())
-
-                .build();
-    }
-
 }

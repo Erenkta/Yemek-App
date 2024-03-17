@@ -8,11 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumNotFoundException;
 import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumIsNullException;
 import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumMenuNotFoundException;
+import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumNotFoundException;
+import com.proje.yemekapp.Utils.Exceptions.MenuExceptions.MenuNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -25,10 +25,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
         MethodArgumentNotValidException.class,
-        NoSuchElementException.class,
         NullPointerException.class,
         KurumIsNullException.class,
-        KurumMenuNotFoundException.class
+        KurumNotFoundException.class,
+        KurumMenuNotFoundException.class,
+        //Menu Exceptions
+        MenuNotFoundException.class,
     })
     ResponseEntity<ApiError> handleExceptions(Exception exception,HttpServletRequest request){
         ApiError error = ApiError.builder()
@@ -40,16 +42,15 @@ public class GlobalExceptionHandler {
 
         if(exception instanceof MethodArgumentNotValidException){
             error.setMessage("Hatali Kurum Bilgileri ! Lutfen Tekrar deneyin");
-           error.setStatus(HttpStatus.BAD_REQUEST.value());
+            error.setStatus(HttpStatus.BAD_REQUEST.value());
         }
-        else if(exception instanceof KurumNotFoundException){
+        else if( //Not Found Exceptions
+        exception instanceof KurumIsNullException 
+        || exception instanceof KurumMenuNotFoundException 
+        || exception instanceof KurumNotFoundException
+        || exception instanceof MenuNotFoundException
+        ){
             error.setMessage(exception.getLocalizedMessage());
-            error.setStatus(HttpStatus.NOT_FOUND.value());
-        }else if(exception instanceof KurumIsNullException){
-            error.setMessage(exception.getLocalizedMessage());
-            error.setStatus(HttpStatus.NOT_FOUND.value());
-        }else if(exception instanceof KurumMenuNotFoundException){
-            error.setMessage("Bu kuruma ait menü bulunamadı");
             error.setStatus(HttpStatus.NOT_FOUND.value());
         }
         return ResponseEntity.status(error.getStatus()).body(error);

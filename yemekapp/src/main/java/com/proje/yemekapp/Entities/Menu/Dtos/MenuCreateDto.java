@@ -10,36 +10,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+/* Bir menü oluşturup bunu kuruma atamaya yarayan DTO  */
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MenuCreateDto {
+    
     private String menuAdi;
-    private Boolean aksamOgunu; // Akşam mı sabah mı bunu belli etmeli
-    private String menuTarih; // Ne zamanın yemeği // ay ve yıldan oluşmalı
-
-
-    @JsonBackReference
-    private KurumCreateDto kurum;
-
-    public static MenuEntity toMenuEntity(MenuCreateDto menuDto) {
-        return MenuEntity.builder()
-                .menuAdi(menuDto.getMenuAdi())
-                .aksamOgunu(menuDto.getAksamOgunu())
-                .menuTarih(menuDto.getMenuTarih())
-                .kurum(KurumCreateDto.toKurumEntity(menuDto.getKurum()))
-                .build();
-    }
-
-    public static MenuCreateDto toMenuDto(MenuEntity menuEntity) {
-        return MenuCreateDto.builder()
-                .menuAdi(menuEntity.getMenuAdi())
-                .aksamOgunu(menuEntity.getAksamOgunu())
-                .menuTarih(menuEntity.getMenuTarih())
-                .kurum(KurumCreateDto.toKurumDto(menuEntity.getKurum()))
-                .build();
-    }
+    private Boolean aksamOgunu;
+    private String menuTarih; 
 
 }

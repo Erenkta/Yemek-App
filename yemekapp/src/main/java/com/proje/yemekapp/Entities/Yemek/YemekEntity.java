@@ -1,6 +1,7 @@
 package com.proje.yemekapp.Entities.Yemek;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proje.yemekapp.Entities.Menu.MenuEntity;
 
 import jakarta.persistence.Entity;
@@ -32,6 +33,7 @@ public class YemekEntity {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonIgnore
     private Long id;
 
 

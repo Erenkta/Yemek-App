@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proje.yemekapp.Entities.Kurum.Dtos.KurumCreateDto;
-import com.proje.yemekapp.Entities.Kurum.Dtos.KurumMenuDto;
+import com.proje.yemekapp.Entities.Menu.Dtos.MenuCreateDto;
 import com.proje.yemekapp.Services.concretes.KurumService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
 
 
 
@@ -54,13 +55,8 @@ public class KurumController {
     }
 
     @GetMapping("/api/v1/kurum/{id}/menu")
-    public ResponseEntity<KurumMenuDto> getMenuByKurumId(@PathVariable(name = "id") Long kurumId) {
+    public ResponseEntity<List<MenuCreateDto>> getMenuByKurumId(@PathVariable(name = "id") Long kurumId) {
        return ResponseEntity.status(HttpStatus.FOUND).body(kurumService.getMenu(kurumId));
     }
-    
-    
-    
-    
-
 
 }

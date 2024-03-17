@@ -51,11 +51,6 @@ public class KurumEntity {
     private List<MenuEntity> menu = new ArrayList<>();
 
 
-
-
-
-
-
 }
 
 
