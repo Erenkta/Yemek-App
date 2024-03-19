@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.proje.yemekapp.Entities.Kurum.KurumEntity;
 import com.proje.yemekapp.Entities.Kurum.Dtos.KurumCreateDto;
 import com.proje.yemekapp.Entities.Menu.Dtos.MenuCreateDto;
+import com.proje.yemekapp.Entities.Menu.Dtos.MenuInfoDto;
 import com.proje.yemekapp.Repositories.KurumRepository;
 import com.proje.yemekapp.Services.abstracts.KurumManager;
 import com.proje.yemekapp.Utils.Exceptions.KurumExceptions.KurumIsNullException;
@@ -23,6 +24,7 @@ public class KurumService implements KurumManager {
 
     private final KurumRepository kurumRepository;
     private final ModelMapper modelMapper;
+    
     @Override
     public String createKurum(KurumCreateDto kurumDto)  {
         if(kurumDto == null){
@@ -37,11 +39,13 @@ public class KurumService implements KurumManager {
 
     @Override
     public KurumCreateDto getById(Long kurumId) {
+
         Optional<KurumEntity> entity = kurumRepository.findById(kurumId);
         KurumCreateDto fromDb = modelMapper.toKurumDto(
             entity.orElseThrow(()->new KurumNotFoundException())
         );
 
+        System.out.println(fromDb);
         return fromDb;
     }
 
@@ -70,7 +74,7 @@ public class KurumService implements KurumManager {
 
     
     @Override
-    public List<MenuCreateDto> getMenu(Long kurumId) {
+    public List<MenuInfoDto> getMenu(Long kurumId) {
         Optional<KurumEntity> entityOptional = kurumRepository.findById(kurumId);
 
         KurumEntity entity = entityOptional.orElseThrow(()->new KurumNotFoundException());
@@ -78,8 +82,7 @@ public class KurumService implements KurumManager {
         if(entity.getMenu().size() == 0){
             throw new KurumMenuNotFoundException();
         }
-        
-        List<MenuCreateDto> response = entity.getMenu().stream().map(item->modelMapper.toMenuDto(item)).toList();
+        List<MenuInfoDto> response = entity.getMenu().stream().map(item->modelMapper.toMenuInfoDto(item)).toList();
         return response;
     }
 

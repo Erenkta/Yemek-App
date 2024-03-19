@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.proje.yemekapp.Entities.Kurum.Dtos.KurumCreateDto;
 import com.proje.yemekapp.Entities.Menu.Dtos.MenuCreateDto;
+import com.proje.yemekapp.Entities.Menu.Dtos.MenuInfoDto;
 
 public interface KurumManager {
     
@@ -14,7 +15,7 @@ public interface KurumManager {
     KurumCreateDto getById(Long kurumId);
     KurumCreateDto getByName(String kurumAdi);
     List<KurumCreateDto> getByIl(String kurumIl);
-    List<MenuCreateDto> getMenu(Long kurumId);
+    List<MenuInfoDto> getMenu(Long kurumId);
 
     
     //TODO : Update ve Delete işlemleri. Ayrıca Read kısmındaki Listelerin Pagination'a çevrilmesi

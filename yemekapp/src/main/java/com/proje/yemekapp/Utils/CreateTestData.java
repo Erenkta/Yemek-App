@@ -37,7 +37,7 @@ public class CreateTestData {
             MenuEntity testListe = MenuEntity.builder()
             .id(1L)
             .menuAdi("test")
-            .aksamOgunu(true)
+            .menuOgun(true)
             .menuTarih("GG/AA/YYYY")
             .build();
             yemekListeRepository.save(testListe);

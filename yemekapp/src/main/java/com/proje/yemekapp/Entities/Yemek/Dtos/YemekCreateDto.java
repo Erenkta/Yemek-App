@@ -1,11 +1,9 @@
 package com.proje.yemekapp.Entities.Yemek.Dtos;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.proje.yemekapp.Entities.Menu.Dtos.MenuCreateDto;
-import com.proje.yemekapp.Entities.Yemek.YemekEntity;
-
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Builder.Default;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,11 +15,19 @@ import lombok.Setter;
 @Setter
 public class YemekCreateDto {
     
+    @NotEmpty
     private String yemekAdi;
+    @NotEmpty
     private String yemekTuru; // Çorba - Tatlı - Ana öğün - Meyve
-    private Boolean vegan;
-    private Boolean vejeteryan;
+
+    @Default
+    private Boolean vegan = false;
+    @Default
+    private Boolean vejeteryan = false;
+
+    @NotEmpty
     private int yemekKalori;
+    @NotEmpty
     private int yemekGramaj;
 }
 

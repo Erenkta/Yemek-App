@@ -20,7 +20,7 @@ import lombok.Setter;
 public class MenuCreateDto {
     
     private String menuAdi;
-    private Boolean aksamOgunu;
+    private String menuOgun;
     private String menuTarih; 
 
 }

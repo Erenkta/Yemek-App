@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.proje.yemekapp.Entities.Kurum.KurumEntity;
 import com.proje.yemekapp.Entities.Yemek.YemekEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,14 +39,15 @@ public class MenuEntity {
     private Long id;
 
   
+    
     private String menuAdi; 
 
 
-    private Boolean aksamOgunu; // Akşam mı sabah mı bunu belli etmeli // Boolean da olabilir // True ise aksam
+    private Boolean menuOgun; // Akşam mı sabah mı bunu belli etmeli // Boolean da olabilir // True ise aksam
 
     private String menuTarih; // Ne zamanın yemeği // ay ve yıldan oluşmalı
     
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu",cascade = CascadeType.REMOVE)
     @JsonManagedReference
     private List<YemekEntity> yemekler;
 

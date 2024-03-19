@@ -1,17 +1,14 @@
 package com.proje.yemekapp.Utils.Mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.proje.yemekapp.Entities.Kurum.KurumEntity;
 import com.proje.yemekapp.Entities.Kurum.Dtos.KurumCreateDto;
 import com.proje.yemekapp.Entities.Menu.MenuEntity;
 import com.proje.yemekapp.Entities.Menu.Dtos.MenuCreateDto;
+import com.proje.yemekapp.Entities.Menu.Dtos.MenuInfoDto;
 import com.proje.yemekapp.Entities.Yemek.YemekEntity;
 import com.proje.yemekapp.Entities.Yemek.Dtos.YemekCreateDto;
-import com.proje.yemekapp.Repositories.KurumRepository;
-import com.proje.yemekapp.Repositories.MenuRepository;
-import com.proje.yemekapp.Repositories.YemekRepository;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +20,10 @@ public class ModelMapper {
 
 
     public MenuEntity toMenuEntity(MenuCreateDto menuDto) {
+        boolean ogun = menuDto.getMenuOgun().contains("Akşam");
         MenuEntity menuEntity = MenuEntity.builder()
                 .menuAdi(menuDto.getMenuAdi())
-                .aksamOgunu(menuDto.getAksamOgunu())
+                .menuOgun(ogun)
                 .menuTarih(menuDto.getMenuTarih())
                 .build();
                 return menuEntity;
@@ -33,9 +31,10 @@ public class ModelMapper {
     }
     
     public MenuCreateDto toMenuDto(MenuEntity menuEntity) {
+        System.out.println(menuEntity.getMenuOgun());
         return MenuCreateDto.builder()
                 .menuAdi(menuEntity.getMenuAdi())
-                .aksamOgunu(menuEntity.getAksamOgunu())
+                .menuOgun(menuEntity.getMenuOgun() ? "Akşam Yemeği" : "Sabah Kahvaltısı")
                 .menuTarih(menuEntity.getMenuTarih())
                 .build();
     }
@@ -79,5 +78,16 @@ public class ModelMapper {
                 .build();
     }
 
-
+    public MenuInfoDto toMenuInfoDto(MenuEntity menuEntity){
+        return MenuInfoDto.builder()
+        .menuAdi(menuEntity.getMenuAdi())
+        .menuTarih(menuEntity.getMenuTarih())
+        .menuOgun(menuEntity.getMenuOgun() ? "Akşam Yemeği" : "Sabah Kahvaltısı") 
+        .yemekListe(
+            menuEntity.getYemekler().stream()
+            .map(item->this.toYemekDto(item))
+            .toList()
+        )
+        .build();
+    }
 }

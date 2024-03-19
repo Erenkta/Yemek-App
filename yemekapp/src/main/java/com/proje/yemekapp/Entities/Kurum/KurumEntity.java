@@ -6,6 +6,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.proje.yemekapp.Entities.Menu.MenuEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -38,14 +39,14 @@ public class KurumEntity {
     private Long id;
 
 
-    @NotEmpty
+
     private String kurumAdi;
-    @NotEmpty
+
     private String kurumIl;
-    @NotEmpty
+
     private String kurumAdres;
 
-    @OneToMany(mappedBy ="kurum")
+    @OneToMany(mappedBy ="kurum",cascade = CascadeType.REMOVE)
     @JsonManagedReference
     @Default
     private List<MenuEntity> menu = new ArrayList<>();
